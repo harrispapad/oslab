@@ -335,6 +335,9 @@ struct inode *ext2_iget(struct super_block *sb, unsigned long ino)
 		iget_failed(inode);
 		return ERR_PTR(ret);
 	}
+
+	ei = EXT2_I(inode);
+	
 	//> Setup the {inode,file}_operations structures depending on the type.
 	if (S_ISREG(inode->i_mode)) {
 	    /* Regular file */
@@ -371,7 +374,6 @@ struct inode *ext2_iget(struct super_block *sb, unsigned long ino)
 	/*
 	 * Fill the necessary fields of the ext2_inode_info structure.
 	 */
-	ei = EXT2_I(inode);
 	ei->i_dtime = le32_to_cpu(raw_inode->i_dtime);
 	ei->i_flags = le32_to_cpu(raw_inode->i_flags);
 	ext2_set_inode_flags(inode);
