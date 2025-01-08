@@ -325,8 +325,6 @@ static int ext2_allocate_in_bg(struct super_block *sb, int group,
         return -1;
     }
 
-    num = min(*count, (unsigned long)(nblocks - first_free_bit));
-
     for (num = 0; num < *count; num++) {
         if (ext2_set_bit_atomic(sb->s_lock, first_free_bit + num, bitmap_bh->b_data)) {
             if (num == 0)
